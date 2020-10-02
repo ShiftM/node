@@ -15,10 +15,10 @@ var connection = mysql.createConnection({
 
 app.get('/', (req, res) => {
     res.setHeader('Content-Type', 'text/html');
-    res.setHeader('Content-Type', 'text/css');
+    // res.setHeader('Content-Type', 'text/css');
 
     fs.createReadStream('./index.html').pipe(res);
-    fs.createReadStream('/styles/customStyles.css').pipe(res);
+    // fs.createReadStream('/styles/customStyles.css').pipe(res);
 
     connection.connect (function(err) {
         if (err){
