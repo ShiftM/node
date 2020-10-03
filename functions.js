@@ -18,3 +18,4 @@ function insertComment()
     xhttp.setRequestHeader("Content-Type", "application/json");
     xhttp.send('{"email":"'+email+'", "password":"'+password+'"}');
 }
+
