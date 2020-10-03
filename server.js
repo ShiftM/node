@@ -41,26 +41,27 @@ app.get('/functions.js', (req, res) => {
 
 app.post('/insert', (req, res) => {
     res.statusCode = 200;
-    res.setHeader('Content-Type', 'text/plain');
+    alert('HELLO');
+    // res.setHeader('Content-Type', 'text/plain');
 
-    var content = '';
-    req.on('data', function(data){
-        content += data;
+    // var content = '';
+    // req.on('data', function(data){
+    //     content += data;
 
-        var obj = JSON.parse(content);
+    //     var obj = JSON.parse(content);
 
-        console.log("The UserName is: "+ obj.email);
-        console.log("The comment is: "+ obj.password);
-        // var conn = con.getConnection();
+    //     console.log("The UserName is: "+ obj.email);
+    //     console.log("The comment is: "+ obj.password);
+    //     // var conn = con.getConnection();
 
-        connection.query('INSERT INTO USERDATABASE.customers (customers.email, customers.pass) VALUES (?,?)',[obj.email,obj.password], function(error, results, fields){
-        if(error) throw error;
-        console.log("Success!");
-    });
+    //     connection.query('INSERT INTO USERDATABASE.customers (customers.email, customers.pass) VALUES (?,?)',[obj.email,obj.password], function(error, results, fields){
+    //     if(error) throw error;
+    //     console.log("Success!");
+    // });
 
-    conn.end();
-    res.end("Success!");
-    });
+    // conn.end();
+    // res.end("Success!");
+    // });
 });
 const {PORT = 3000} = process.env;
 app.listen(PORT, () => {
