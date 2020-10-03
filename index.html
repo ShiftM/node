@@ -4,20 +4,16 @@
     <title>Comment Section</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <link rel='stylesheet' href='styles/customStyles.css'>
+    <!-- <link rel='stylesheet' href='styles/customStyles.css'> -->
     <script>
+
+        function getStore() {
+            
+        }
 
         function insertComment()
         {
             var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function(){
-                if(this.readyState == 4 && this.status == 200)
-                {
-                var result = this.responseText;
-                console.log(result);
-                loadComments();
-                } 
-            }
 
             var email = document.getElementById('exampleInputEmail1').value;
             var password = document.getElementById('exampleInputPassword1').value;
@@ -30,7 +26,27 @@
     </script>
 
     <style>
-        
+        h1 {
+            text-align: center;
+            margin-top: 30px;
+            margin-bottom: 30px;
+
+        }
+
+        body {
+            background-color: white;
+        }
+
+        /* Target a class with a dot */
+        .card-body {
+            background-color: lightgray;
+        }
+
+
+        /* Target an ID with a hashtag */
+        #main-content {
+            text-align: left;
+        }
     </style>
 </head>
 <body>
@@ -38,7 +54,7 @@
     <h1>Welcome</h1>
     <div id='comments' class='card mb-2'>
         <div class='card-body'>
-            <h5 class='card-title'>Name: Username</h5>
+            <h5 class='card-title' id='area-text'>Name: Username</h5>
             <h6 class='card-subtitle text-muted'>Date: 9/6/20</h6>
         </div>
     </div>
