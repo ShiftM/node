@@ -41,7 +41,6 @@ app.get('/functions.js', (req, res) => {
 
 app.post('/insert', (req, res) => {
     res.statusCode = 200;
-    alert('HELLO');
     // res.setHeader('Content-Type', 'text/plain');
 
     // var content = '';
