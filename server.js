@@ -126,7 +126,7 @@ app.post('/insert', (req, res) => {
         // prints time in HH:MM format
         console.log(hours + ":" + minutes);
 
-        connection.query('INSERT INTO customer (email, pass, date, time) VALUES (?,?)',[obj.email,obj.password, year + "-" + month + "-" + date, hours + ":" + minutes], function(error, results, fields){
+        connection.query('INSERT INTO customer (email, pass, date, time, ) VALUES (?,?,?,?)',[obj.email,obj.password, year + "-" + month + "-" + date, Date().getHours + ":" + Date().getMinutes], function(error, results, fields){
         if(error) throw error;
         console.log("Success!");
     });
