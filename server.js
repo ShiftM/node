@@ -21,6 +21,7 @@ app.get('/', (req, res) => {
     } else {
         res.setHeader('Content-Type', 'text/html');
         fs.createReadStream('./index.html').pipe(res);
+
     }
 
     connection.connect (function(err) {
@@ -33,6 +34,34 @@ app.get('/', (req, res) => {
     connection.end();
 });
 
+app.get('/functions', (req, res) => {
+    res.writeHead(200, {"Content-Type":"text/javascript"});
+    fs.createReadStream("./functions.js").pipe(res);
+});
+
+app.post('/insert', (req, res) => {
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'text/plain');
+
+    var content = '';
+    req.on('data', function(data){
+        content += data;
+
+        var obj = JSON.parse(content);
+
+        console.log("The UserName is: "+ obj.email);
+        console.log("The comment is: "+ obj.password);
+        var conn = con.getConnection();
+
+        conn.query('INSERT INTO USERDATABASE.customers (customers.email, customers.pass) VALUES (?,?)',[obj.email,obj.password], function(error, results, fields){
+        if(error) throw error;
+        console.log("Success!");
+    });
+
+    conn.end();
+    res.end("Success!");
+    });
+});
 const {PORT = 3000} = process.env;
 app.listen(PORT, () => {
     console.log('HELO');
