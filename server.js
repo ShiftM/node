@@ -34,7 +34,7 @@ app.get('/', (req, res) => {
     connection.end();
 });
 
-app.get('/functions', (req, res) => {
+app.get('/functions.js', (req, res) => {
     res.writeHead(200, {"Content-Type":"text/javascript"});
     fs.createReadStream("./functions.js").pipe(res);
 });
