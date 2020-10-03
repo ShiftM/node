@@ -51,9 +51,9 @@ app.post('/insert', (req, res) => {
 
         console.log("The UserName is: "+ obj.email);
         console.log("The comment is: "+ obj.password);
-        var conn = con.getConnection();
+        // var conn = con.getConnection();
 
-        conn.query('INSERT INTO USERDATABASE.customers (customers.email, customers.pass) VALUES (?,?)',[obj.email,obj.password], function(error, results, fields){
+        connection.query('INSERT INTO USERDATABASE.customers (customers.email, customers.pass) VALUES (?,?)',[obj.email,obj.password], function(error, results, fields){
         if(error) throw error;
         console.log("Success!");
     });
