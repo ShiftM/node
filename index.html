@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Comment Section</title>
+    <title>Contact Tracing</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <!-- <link rel='stylesheet' href='styles/customStyles.css'> -->
@@ -15,24 +15,34 @@
         {
             var xhttp = new XMLHttpRequest();
 
-            var email = document.getElementById('exampleInputEmail1').value;
-            var password = document.getElementById('exampleInputPassword1').value;
+            var fullname = document.getElementById('fullname').value;
+            var address = document.getElementById('address').value;
+            var city = document.getElementById('city').value;
+            var email = document.getElementById('email').value;
+            var number = document.getElementById('number').value;
 
             xhttp.open("POST", "/insert", true);
             xhttp.setRequestHeader("Content-Type", "application/json");
-            xhttp.send('{"email":"'+email+'", "password":"'+password+'"}');
+            xhttp.send('{"fullname":"'+fullname+'","address":"'+address+'","city":"'+city+'","email":"'+email+'", "number":"'+number+'"}');
         }
 
     </script>
 
     <style>
-        h1 {
-            text-align: center;
-            margin-top: 30px;
-            margin-bottom: 30px;
+         @font-face { font-family: SamsungSans; src: url('./assets/fonts/SAMSUNGSHARPSANS-BOLD.TTF'); } 
 
+
+        h1 {
+            text-align: left;
+            /* margin-top: 30px;
+            margin-bottom: 30px; */
+            font-family: SamsungSans;
         }
 
+        h5 {
+            font-family: SamsungSans;
+            font-size: large;
+        }
         body {
             background-color: white;
         }
@@ -50,38 +60,73 @@
     </style>
 </head>
 <body>
-<div class='container'>
-    <h1>Welcome</h1>
-    <div id='comments' class='card mb-2'>
-        <div class='card-body'>
-            <h5 class='card-title' id='area-text'>Name: Username</h5>
-            <h6 class='card-subtitle text-muted'>Date: 9/6/20</h6>
+  <div>
+<div class='p-0 container'>
+    <img src="/assets/logo.png" style="width: 50%; margin-top: 15px;" class="img-fluid mx-auto d-block " alt="Samsung Logo">
+    <hr>
+
+    <div class="card text-black " style="border: none;" >
+        <img src="/assets/bg-img1.png" class="card-img" alt="...">
+        <div class="card-img-overlay">
+          <h1 class="card-title" >Health Declaration Form</h1>
+          <p class="card-text">Your safety is our priority.  Kindly fill out this form out with your accurate personal information as required by DOH and Office of the Mayor.</p>
         </div>
     </div>
-<hr>
-<div id="main-content">
-    <h3>Leave your comments below</h3>
-    <div id='make-comment'>
-        <form>
-            <div class="form-group">
-              <label for="exampleInputEmail1">Email address</label>
-              <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" Required>
-              <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-            </div>
-            <div class="form-group">
-              <label for="exampleInputPassword1">Password</label>
-              <input type="password" class="form-control" id="exampleInputPassword1">
-            </div>
-            <div class="form-group form-check">
-              <input type="checkbox" class="form-check-input" id="exampleCheck1">
-              <label class="form-check-label" for="exampleCheck1">I agree to the terms and conditions</label>
-            </div>
-            <button type="submit" class="btn btn-primary" onclick="insertComment()">Submit</button>
-          </form>
-        </div>
-</div>
 
 </div>
+<br>
 
+<div class="container">
+  <div id="main-content " style="padding: 100dp;">
+      <div id='make-comment'>
+          <form>
+              <div class="form-group">
+                <!-- <label for="exampleInputEmail1">Email address</label> -->
+                <input type="text" class="form-control" id="fullname" aria-describedby="Your Full Name" Required placeholder="Full Name *">
+                <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+              </div>
+
+              <div class="form-group">
+                  <!-- <label for="exampleInputEmail1">Email address</label> -->
+                  <input type="text" class="form-control" id="address" aria-describedby="Your Address" Required placeholder="Address Line *">
+                  <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+                </div>
+
+                <div class="form-group">
+                  <!-- <label for="exampleInputEmail1">Email address</label> -->
+                  <input type="text" class="form-control" id="city" aria-describedby="Your City" Required placeholder="City *">
+                  <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+                </div>
+
+                <div class="form-group">
+                  <!-- <label for="exampleInputEmail1">Email address</label> -->
+                  <input type="email" class="form-control" id="email" aria-describedby="Your Email" placeholder="Email (Optional)">
+                  <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+                </div>
+
+                <div class="form-group">
+                  <!-- <label for="exampleInputEmail1">Email address</label> -->
+                  <input type="number" class="form-control" id="number" aria-describedby="Your Mobile Number" placeholder="Mobile Number *">
+                  <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+                </div>
+                <small class="form-text text-muted">The information I have given is true, correct, and complete. I understand that failure to answer any qyestion or giving false answers can be penalized in accordance with the law. I voluntary and freely consent to the collection and sharing of the above personal information for the purpose of affecting control of the COVID-19 infection as required by RA 11469, Bayanihan to Heal as One Act.</small>
+                <br>
+
+              <!-- <div class="form-group">
+                <label for="exampleInputPassword1">Password</label>
+                <input type="password" class="form-control" id="exampleInputPassword1">
+              </div> -->
+              <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                <label class="form-check-label" for="exampleCheck1">I understand that by clicking the submit button, I am agreeing to Samsung's Privacy Policy.</label>
+              </div>
+              <button style="border-radius: 100px; background-color:#13289F; " type="submit" class="btn btn-primary btn-lg btn-block" onclick="insertComment()">Submit</button>
+            </form>
+          </div>
+  </div>
+</div>
+</div>
+
+<br>
 </body>
 </html>

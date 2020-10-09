@@ -10,23 +10,14 @@ var connection = mysql.createConnection({
     user: "admin",
     password: "12345678",
     database: "userdatabase",
-
-    // port: "3306",
 });
 
-// var connection = mysql.createConnection({
-//     host:"localhost",
-//     user: "root",
-//     password: "",
-//     database: "userdatabase",
-// });
+
+app.use('/assets', express.static(__dirname + "/assets"));
 
 app.get('*', (req, res) => {
-    console.log(req.url);
-    // if (req.url == '/styles/customStyles.css' ) {
-    //     res.setHeader('Content-Type', 'text/css');
-    //     fs.createReadStream('/styles/customStyles.css').pipe(res);
-    // } else {
+    // console.log(req.url);
+ 
     res.setHeader('Content-Type', 'text/html');
     fs.createReadStream('./index.html').pipe(res);
 
@@ -60,27 +51,9 @@ app.get('*', (req, res) => {
 
     // }
     // res.send('Hello');
-    console.log('Connect via GET')
+    console.log('Connect via GET');
 
-
-    // connection.connect (function(err) {
-    //     if (err){
-    //         res.send('Cant connect to database');
-    //         return;
-    //     }
-    //     res.send('Connected to database!!');
-    // });
-    // connection.end();
 });
-
-// app.get('/styles', (req, res) => {
-//     res.setHeader('Content-Type', 'text/css');
-//     fs.createReadStream('/styles/customStyles.css').pipe(res);
-// });
-// app.get('/functions.js', (req, res) => {
-//     res.writeHead(200, {"Content-Type":"text/javascript"});
-//     fs.createReadStream("./functions.js").pipe(res);
-// });
 
 app.post('/insert', (req, res) => {
     res.statusCode = 200;
@@ -92,8 +65,12 @@ app.post('/insert', (req, res) => {
 
         var obj = JSON.parse(content);
 
+        console.log("The name is: "+ obj.fullname);
+        console.log("The address is: "+ obj.address);
+        console.log("The city is: "+ obj.city);
         console.log("The email is: "+ obj.email);
-        console.log("The password is: "+ obj.password);
+        console.log("The number is: "+ obj.number);
+
         // var conn = con.getConnection();
 
         let date_ob = new Date();
@@ -126,7 +103,7 @@ app.post('/insert', (req, res) => {
         // prints time in HH:MM format
         console.log(hours + ":" + minutes);
 
-        connection.query('INSERT INTO customer (email, pass, date, time ) VALUES (?,?,?,?)',[obj.email,obj.password, year + "-" + month + "-" + date, hours + ":" + minutes], function(error, results, fields){
+        connection.query('INSERT INTO customer (fullname, address, city, email, number, date, time ) VALUES (?,?,?,?)',[obj.fullname, obj.address, obj.city, obj.email ,obj.number, year + "-" + month + "-" + date, hours + ":" + minutes], function(error, results, fields){
         if(error) throw error;
         console.log("Success!");
     });
