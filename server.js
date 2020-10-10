@@ -16,31 +16,34 @@ var connection = mysql.createConnection({
 
 app.use('*/assets', express.static(__dirname + "/assets"));
 
- 
-app.get('*', (req, res) => {
-    res.setHeader('Content-Type', 'text/html');
-    // EXTRACT STORE URL
-    var str = req.url.split("/"); 
-
-    let rawdata = fs.readFileSync('./assets/stores.json');
-    let stores = JSON.parse(rawdata);
-
-    // CHECK IF STORE IS VALID
-    let valid = false;
-    for (i = 0; i < stores.length; i++) {
-        if (str[1] === stores[i]) {
-            valid = true;
-        }
-    }
-
-    // REDIRECT
-    if (valid) {
-        res.sendFile(path.join(__dirname+'/index.html'));
-    } else {
-        res.sendFile(path.join(__dirname+'/invalid.html'));
-        // res.send('Invalid URL');
-    }
+app.get('/', (req, res) => {
+    res.send("HELLO WORLD");
 });
+ 
+// app.get('*', (req, res) => {
+//     res.setHeader('Content-Type', 'text/html');
+//     // EXTRACT STORE URL
+//     var str = req.url.split("/"); 
+
+//     let rawdata = fs.readFileSync('./assets/stores.json');
+//     let stores = JSON.parse(rawdata);
+
+//     // CHECK IF STORE IS VALID
+//     let valid = false;
+//     for (i = 0; i < stores.length; i++) {
+//         if (str[1] === stores[i]) {
+//             valid = true;
+//         }
+//     }
+
+//     // REDIRECT
+//     if (valid) {
+//         res.sendFile(path.join(__dirname+'/index.html'));
+//     } else {
+//         res.sendFile(path.join(__dirname+'/invalid.html'));
+//         // res.send('Invalid URL');
+//     }
+// });
 
 
 app.post('/insert', (req, res) => {
