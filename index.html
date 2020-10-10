@@ -6,24 +6,6 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <!-- <link rel='stylesheet' href='styles/customStyles.css'> -->
     <script>
-        var global = null;
-        // window.onload = verifyURL;
-
-
-        function verifyURL() {
-            var xhttp = new XMLHttpRequest();
-
-            var fullname = document.getElementById('fullname').value;
-
-            xhttp.onload = function () {
-              let res = JSON.parse(xhttp.response);
-              global = res.store;
-            }
-
-            xhttp.open("POST", "/verify", true);
-            xhttp.setRequestHeader("Content-Type", "application/json");
-            xhttp.send('{"url":"'+ window.location.origin+'"}');
-        }
 
         function insertComment()
         {
@@ -67,8 +49,40 @@
          @font-face { font-family: SamsungSans; src: url('./assets/SAMSUNGSHARPSANS-BOLD.TTF'); } 
          @font-face { font-family: SamsungSansRegular; src: url('./assets/SAMSUNGSHARPSANS-REGULAR.TTF'); } 
 
+         @viewport {
+            width: device-width ;
+            zoom: 1.0 ;
+          } 
       
-   
+          /* // Small devices (landscape phones, 576px and up) */
+          @media (min-width: 576px) { 
+
+           }
+
+          /* // Medium devices (tablets, 768px and up) */
+          @media (min-width: 768px) { 
+            body {
+              width: 500px;
+              align-content: center;
+              margin: auto;
+              background-color: white;
+            }
+          }
+
+          /* // Large devices (desktops, 992px and up) */
+          @media (min-width: 992px) { 
+            body {
+              width: 500px;
+              align-content: center;
+              margin: auto;
+              background-color: white;
+            }
+           }
+
+          /* // Extra large devices (large desktops, 1200px and up) */
+          @media (min-width: 1200px) { 
+
+           }
 
         h1 {
             text-align: left;
