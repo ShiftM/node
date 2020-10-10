@@ -65,16 +65,18 @@
 
     <style>
          @font-face { font-family: SamsungSans; src: url('./assets/SAMSUNGSHARPSANS-BOLD.TTF'); } 
+         @font-face { font-family: SamsungSansRegular; src: url('./assets/SAMSUNGSHARPSANS-REGULAR.TTF'); } 
 
       
           /* // Small devices (landscape phones, 576px and up) */
           @media (min-width: 576px) { 
-            /* body {
-              width: 500px;
-              align-content: center;
-              margin: auto;
-              background-color: white;
-            } */
+            .container {
+              max-width: 100%;
+            }
+            #banner {
+              height: 300px;
+            }
+
            }
 
           /* // Medium devices (tablets, 768px and up) */
@@ -85,6 +87,11 @@
               margin: auto;
               background-color: white;
             }
+
+            #banner {
+              height: 300px;
+            }
+
           }
 
           /* // Large devices (desktops, 992px and up) */
@@ -96,6 +103,9 @@
               background-color: white;
             }
 
+            #banner {
+              height: 300px;
+            }
            }
 
           /* // Extra large devices (large desktops, 1200px and up) */
@@ -109,10 +119,21 @@
             margin-bottom: 30px; */
             font-family: SamsungSans;
         }
-
+        p {
+          font-family: SamsungSansRegular;
+        }
+        label {
+          font-family: SamsungSansRegular;
+        }
+        small {
+          font-family: SamsungSansRegular; 
+        }
         h5 {
             font-family: SamsungSans;
             font-size: large;
+        }
+        hr {
+          margin-bottom: 0;
         }
         body {
             background-color: white;
@@ -165,31 +186,22 @@
 
 
 <body>
-<div class="card " style="border: none;">
+<div>
   <div class='p-0 container'>
     <img src="/assets/logo.png" style="width: 50%; margin-top: 15px;" class="img-fluid mx-auto d-block " alt="Samsung Logo">
     <hr>
   </div>
   <div class="holder" style="position: relative;">
     <div id='dataform' style="position: absolute;">
-      <!-- <div class='p-0 container'>
-          <div class="card text-black " style="border: none;"  >
-              <img src="/assets/bg-img1.png" class="card-img" alt="...">
-              <div class="card-img-overlay">
-
-              </div>
+      <div style="padding-bottom: 20px;">
+        <div >
+          <img style=" width:50%; position: absolute; top: 0px;right: 0px; z-index: -5;" src="/assets/img-right.jpg"  alt="...">
+          <div style=" padding-left: 15px; z-index: 100; padding-bottom: 20px;">
+            <h1 class="card-title" style="padding-right: 20%; padding-top: 40px; z-index: 100">Health <br>Declaration Form</h1>
+            <p class="card-text" style="padding-right: 20%;">Your safety is our priority.  Kindly fill out this form out with your accurate personal information as required by DOH and Office of the Mayor.</p>
           </div>
-      </div> -->
-      <div style="position: relative; height: 220px;">
-        <div style="position: absolute;">
-          <img src="/assets/bg-img1.png" class="card-img" alt="...">
         </div>
-        <div style="position: absolute; padding-left: 10px;">
-          <h1 class="card-title" >Health <br>Declaration Form</h1>
-          <p class="card-text">Your safety is our priority.  Kindly fill out this form out with your accurate personal information as required by DOH and Office of the Mayor.</p>
-        </div>
-      </div>
-
+    </div>
       <div class="container">
         <div id="main-content " style="padding: 100dp;">
             <div id='make-comment'>
@@ -223,6 +235,8 @@
                         <input type="number" class="form-control" id="number" required aria-describedby="Your Mobile Number" placeholder="Mobile Number *">
                         <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
                       </div>
+                      <br>
+
                       <small class="form-text text-muted">The information I have given is true, correct, and complete. I understand that failure to answer any qyestion or giving false answers can be penalized in accordance with the law. I voluntary and freely consent to the collection and sharing of the above personal information for the purpose of affecting control of the COVID-19 infection as required by RA 11469, Bayanihan to Heal as One Act.</small>
                       <br>
 
