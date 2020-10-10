@@ -2,6 +2,7 @@ const { time } = require('console');
 const express = require('express');
 const app = express();
 const fs = require('fs');
+const path = require('path');
 
 const  mysql = require('mysql');
 
@@ -13,51 +14,49 @@ var connection = mysql.createConnection({
 });
 
 
-app.use('/assets', express.static(__dirname + "/assets"));
+app.use('*/assets', express.static(__dirname + "/assets"));
 
-app.get('*', (req, res) => {
-    // console.log(req.url);
  
+app.get('*', (req, res) => {
     res.setHeader('Content-Type', 'text/html');
-    fs.createReadStream('./index.html').pipe(res);
+    // EXTRACT STORE URL
+    var str = req.url.split("/"); 
 
+    let rawdata = fs.readFileSync('./assets/stores.json');
+    let stores = JSON.parse(rawdata);
 
-    var conn = mysql.createConnection({
-        host:"testdatabase-1.c7rplytalvfe.us-east-2.rds.amazonaws.com",
-        user: "admin",
-        password: "12345678",
-        database: "userdatabase",
-    });
+    // CHECK IF STORE IS VALID
+    let valid = false;
+    for (i = 0; i < stores.length; i++) {
+        if (str[1] === stores[i]) {
+            valid = true;
+        }
+    }
 
-    conn.query('SELECT * FROM stores', function(error, results, fields){
-        if(error) throw error;
-        // Compare URL with result. Check to see if the url matches the stores available
-        var storeName = 'null';
-        
-        results.forEach((store)=>
-        {
-            // Do if url from QR Code is valid
-            if (req.url === "/" + store.linkid) {
-                console.log('VALID');
-                storeName = store.linkid
-            } 
-
-        });
-        console.log(storeName);        
-    });
-
-    conn.end(); 
-
-
-    // }
-    // res.send('Hello');
-    console.log('Connect via GET');
-
+    // REDIRECT
+    if (valid) {
+        res.sendFile(path.join(__dirname+'/index.html'));
+    } else {
+        res.send('Invalid URL');
+    }
 });
 
+
 app.post('/insert', (req, res) => {
-    res.statusCode = 200;
-    res.setHeader('Content-Type', 'text/plain');
+    // GET DATE
+    let date_ob = new Date();
+    let date = ("0" + date_ob.getDate()).slice(-2);
+    let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
+    let year = date_ob.getFullYear();
+    let hours = date_ob.getHours();
+    let minutes = date_ob.getMinutes();
+    let seconds = date_ob.getSeconds();
+
+    let formattedDate = year + "-" + month + "-" + date;
+    let formattedTime = hours + ":" + minutes + ":" + seconds;
+    // prints time in HH:MM format
+    console.log(hours + ":" + minutes);
+
 
     var content = '';
     req.on('data', function(data){
@@ -70,46 +69,21 @@ app.post('/insert', (req, res) => {
         console.log("The city is: "+ obj.city);
         console.log("The email is: "+ obj.email);
         console.log("The number is: "+ obj.number);
+        console.log("The store is: "+ obj.store);
 
-        // var conn = con.getConnection();
-
-        let date_ob = new Date();
-
-        // current date
-        // adjust 0 before single digit date
-        let date = ("0" + date_ob.getDate()).slice(-2);
-
-        // current month
-        let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
-
-        // current year
-        let year = date_ob.getFullYear();
-
-        // current hours
-        let hours = date_ob.getHours();
-
-        // current minutes
-        let minutes = date_ob.getMinutes();
-
-        // current seconds
-        let seconds = date_ob.getSeconds();
-
-        // prints date in YYYY-MM-DD format
-        console.log(year + "-" + month + "-" + date);
-
-        // prints date & time in YYYY-MM-DD HH:MM:SS format
-        console.log(year + "-" + month + "-" + date + " " + hours + ":" + minutes + ":" + seconds);
-
-        // prints time in HH:MM format
-        console.log(hours + ":" + minutes);
-
-        connection.query('INSERT INTO customer (fullname, address, city, email, number, date, time ) VALUES (?,?,?,?)',[obj.fullname, obj.address, obj.city, obj.email ,obj.number, year + "-" + month + "-" + date, hours + ":" + minutes], function(error, results, fields){
+        connection.query('INSERT INTO customer (fullname, address, city, email, number, store, date, time ) VALUES (?,?,?,?,?,?,?,?)',[obj.fullname, obj.address, obj.city, obj.email ,obj.number, obj.store, formattedDate, formattedTime], function(error, results, fields){
         if(error) throw error;
         console.log("Success!");
+
+
     });
 
+    res.json({ 
+        date: formattedDate, 
+        time: formattedTime, 
+    })
     connection.end();
-    res.end("Success!");
+    // res.end("Success!");
     });
 });
 
