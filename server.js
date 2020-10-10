@@ -37,7 +37,8 @@ app.get('*', (req, res) => {
     if (valid) {
         res.sendFile(path.join(__dirname+'/index.html'));
     } else {
-        res.send('Invalid URL');
+        res.sendFile(path.join(__dirname+'/invalid.html'));
+        // res.send('Invalid URL');
     }
 });
 
@@ -80,8 +81,6 @@ app.post('/insert', (req, res) => {
         date: formattedDate, 
         time: formattedTime, 
     })
-    // connection.end();
-    // res.end("Success!");
     });
 });
 
