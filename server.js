@@ -74,15 +74,13 @@ app.post('/insert', (req, res) => {
         connection.query('INSERT INTO customer (fullname, address, city, email, number, store, date, time ) VALUES (?,?,?,?,?,?,?,?)',[obj.fullname, obj.address, obj.city, obj.email ,obj.number, obj.store, formattedDate, formattedTime], function(error, results, fields){
         if(error) throw error;
         console.log("Success!");
-
-
     });
 
     res.json({ 
         date: formattedDate, 
         time: formattedTime, 
     })
-    connection.end();
+    // connection.end();
     // res.end("Success!");
     });
 });
