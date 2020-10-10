@@ -66,6 +66,42 @@
     <style>
          @font-face { font-family: SamsungSans; src: url('./assets/SAMSUNGSHARPSANS-BOLD.TTF'); } 
 
+      
+          /* // Small devices (landscape phones, 576px and up) */
+          @media (min-width: 576px) { 
+            body {
+              width: 500px;
+              align-content: center;
+              margin: auto;
+              background-color: white;
+            }
+           }
+
+          /* // Medium devices (tablets, 768px and up) */
+          @media (min-width: 768px) { 
+            body {
+              width: 500px;
+              align-content: center;
+              margin: auto;
+              background-color: white;
+            }
+          }
+
+          /* // Large devices (desktops, 992px and up) */
+          @media (min-width: 992px) { 
+            body {
+              width: 500px;
+              align-content: center;
+              margin: auto;
+              background-color: white;
+            }
+
+           }
+
+          /* // Extra large devices (large desktops, 1200px and up) */
+          @media (min-width: 1200px) { 
+
+           }
 
         h1 {
             text-align: left;
@@ -129,23 +165,30 @@
 
 
 <body>
-<div>
+<div class="card " style="border: none;">
   <div class='p-0 container'>
     <img src="/assets/logo.png" style="width: 50%; margin-top: 15px;" class="img-fluid mx-auto d-block " alt="Samsung Logo">
     <hr>
   </div>
   <div class="holder" style="position: relative;">
     <div id='dataform' style="position: absolute;">
-      <div class='p-0 container'>
+      <!-- <div class='p-0 container'>
           <div class="card text-black " style="border: none;"  >
               <img src="/assets/bg-img1.png" class="card-img" alt="...">
               <div class="card-img-overlay">
-                <h1 class="card-title" >Health Declaration Form</h1>
-                <p class="card-text">Your safety is our priority.  Kindly fill out this form out with your accurate personal information as required by DOH and Office of the Mayor.</p>
+
               </div>
           </div>
+      </div> -->
+      <div style="position: relative; height: 220px;">
+        <div style="position: absolute;">
+          <img src="/assets/bg-img1.png" class="card-img" alt="...">
+        </div>
+        <div style="position: absolute; padding-left: 10px;">
+          <h1 class="card-title" >Health <br>Declaration Form</h1>
+          <p class="card-text">Your safety is our priority.  Kindly fill out this form out with your accurate personal information as required by DOH and Office of the Mayor.</p>
+        </div>
       </div>
-      <br>
 
       <div class="container">
         <div id="main-content " style="padding: 100dp;">
