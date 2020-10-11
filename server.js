@@ -1,10 +1,18 @@
 const { time } = require('console');
 const express = require('express');
+const { google } = require('googleapis');
 const app = express();
 const fs = require('fs');
 const path = require('path');
 
 const  mysql = require('mysql');
+
+// If modifying these scopes, delete token.json.
+const SCOPES = ['https://www.googleapis.com/auth/spreadsheets'];
+const TOKEN_PATH = 'token.json';
+const SPREADSHEET_ID = '1VlgJU7RrbmnViENHqDljLNYFSZgBQkJYUyGAvODAFf0';
+const RANGE = 'Sheet1';
+
 
 var connection = mysql.createConnection({
     host:"testdatabase-1.c7rplytalvfe.us-east-2.rds.amazonaws.com",
@@ -15,10 +23,6 @@ var connection = mysql.createConnection({
 
 
 app.use('*/assets', express.static(__dirname + "/assets"));
-
-// app.get('/', (req, res) => {
-//     res.send("HELLO WORLD");
-// });
  
 app.get('*', (req, res) => {
     res.setHeader('Content-Type', 'text/html');
@@ -61,7 +65,6 @@ app.post('/insert', (req, res) => {
     // prints time in HH:MM format
     console.log(hours + ":" + minutes);
 
-
     var content = '';
     req.on('data', function(data){
         content += data;
@@ -75,17 +78,77 @@ app.post('/insert', (req, res) => {
         console.log("The number is: "+ obj.number);
         console.log("The store is: "+ obj.store);
 
+        // INSERT TO MYSQL
         connection.query('INSERT INTO customer (fullname, address, city, email, number, store, date, time ) VALUES (?,?,?,?,?,?,?,?)',[obj.fullname, obj.address, obj.city, obj.email ,obj.number, obj.store, formattedDate, formattedTime], function(error, results, fields){
-        if(error) throw error;
-        console.log("Success!");
-    });
+            if(error) throw error;
+            console.log("Success!");
 
-    res.json({ 
-        date: formattedDate, 
-        time: formattedTime, 
-    })
+            // INSERT TO SHEETS
+            insertToSheets( JSON.stringify({"data": [[ results.insertId, obj.fullname, obj.address, obj.city, obj.email ,obj.number, formattedDate, formattedTime, obj.store]]}));        
+        });
+
+        res.json({ 
+            date: formattedDate, 
+            time: formattedTime, 
+        })
     });
 });
+
+function insertToSheets (data) {
+        var dataContent = '';
+        dataContent += data;
+
+        // console.log(data);
+        // Load client secrets from a local file.
+        fs.readFile('credentials.json', (err, content) => {
+            if (err) return console.log('Error loading client secret file:', err);
+
+            // Authorize a client with credentials, then call the Google Sheets API.
+            const { client_secret, client_id, redirect_uris }  = JSON.parse(content).installed;
+            let oAuth2Client = new google.auth.OAuth2(client_id, client_secret, redirect_uris[0]);
+
+            fs.readFile(TOKEN_PATH, (err, token) => {
+                if (err) console.log('Token not found. Please generate a new one');
+                // Set oAuth Credentials
+                oAuth2Client.setCredentials(JSON.parse(token));
+
+                var obj = JSON.parse(dataContent);
+                const sheets = google.sheets({ version: 'v4', auth: oAuth2Client });
+                    
+                // Add data to GSheets
+                saveDataAndSendResponse(obj.data, sheets);
+            });
+        });
+}
+
+
+function saveDataAndSendResponse(data, googleSheetsObj) {
+    // console.log(data);
+
+    // data is an array of arrays
+    // each inner array is a row
+    // each array element (of an inner array) is a column
+    let resource = {
+        values: data,
+    };
+
+    googleSheetsObj.spreadsheets.values.append({
+        spreadsheetId: SPREADSHEET_ID,
+        range: RANGE,
+        valueInputOption: 'RAW',
+        resource,
+    }, (err, result) => {
+        if (err) {
+            console.log(err);
+            // response.end('An error occurd while attempting to save data. See console output.');
+        } else {
+            const responseText = `${result.data.updates.updatedCells} cells appended.`;
+            console.log(responseText);
+            // response.end(responseText);
+        }
+    });
+
+}
 
 const {PORT = 3000} = process.env;
 app.listen(PORT, () => {

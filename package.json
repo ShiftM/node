@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
+    "googleapis": "^39.2.0",
     "mongodb": "^3.6.2",
     "mysql": "^2.18.1",
     "nodemon": "^2.0.4"
