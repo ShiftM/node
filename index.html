@@ -30,7 +30,8 @@
                 document.getElementById("info_date").innerHTML = res.date;
                 document.getElementById("info_time").innerHTML = res.time;
 
-                document.getElementById("info_store").innerHTML = urlstore[1];
+                let str = urlstore[1].replace(/-/g, ' ');
+                document.getElementById("info_store").innerHTML = str ;
                 document.getElementById("info_username").innerHTML = "Stay safe " + fullname;
 
             }
