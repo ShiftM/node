@@ -57,14 +57,14 @@ app.post('/insert', (req, res) => {
     let date = ("0" + date_ob.date).slice(-2);
     let month = ("0" + (date_ob.month + 1)).slice(-2);
     let year = date_ob.year;
-    let hours = date_ob.hour;
-    let minutes = date_ob.minute;
-    let seconds = date_ob.second;
+    let hours = ('0' + date_ob.hour).slice(-2);
+    let minutes = ('0' + date_ob.minute).slice(-2);
+    let seconds = ('0' + date_ob.second).slice(-2);
 
     let formattedDate = year + "-" + month + "-" + date;
     let formattedTime = hours + ":" + minutes + ":" + seconds;
     // prints time in HH:MM format
-    // console.log(hours + ":" + minutes);
+    // console.log(dTime);
 
     var content = '';
     req.on('data', function(data){
@@ -91,7 +91,7 @@ app.post('/insert', (req, res) => {
         // console.log("The number is: "+ obj.number);
         // console.log("The store is: "+ obj.store);
 
-        // INSERT TO MYSQL
+        // // INSERT TO MYSQL
         connection.query('INSERT INTO customer (fullname, address, city, email, number, store, date, time ) VALUES (?,?,?,?,?,?,?,?)',[obj.fullname, obj.address, obj.city, obj.email ,obj.number, obj.store, formattedDate, formattedTime], function(error, results, fields){
             if(error) throw error;
             console.log("Successfully Logged customer: "+ obj.fullname );
