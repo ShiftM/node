@@ -52,18 +52,19 @@ app.get('*', (req, res) => {
 
 app.post('/insert', (req, res) => {
     // GET DATE
-    let date_ob = new Date();
-    let date = ("0" + date_ob.getDate()).slice(-2);
-    let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
-    let year = date_ob.getFullYear();
-    let hours = date_ob.getHours();
-    let minutes = date_ob.getMinutes();
-    let seconds = date_ob.getSeconds();
+    let date_ob = GetAbsoluteHKTime();
+
+    let date = ("0" + date_ob.date).slice(-2);
+    let month = ("0" + (date_ob.month + 1)).slice(-2);
+    let year = date_ob.year;
+    let hours = date_ob.hour;
+    let minutes = date_ob.minute;
+    let seconds = date_ob.second;
 
     let formattedDate = year + "-" + month + "-" + date;
     let formattedTime = hours + ":" + minutes + ":" + seconds;
     // prints time in HH:MM format
-    console.log(hours + ":" + minutes);
+    // console.log(hours + ":" + minutes);
 
     var content = '';
     req.on('data', function(data){
@@ -71,17 +72,17 @@ app.post('/insert', (req, res) => {
 
         var obj = JSON.parse(content);
 
-        console.log("The name is: "+ obj.fullname);
-        console.log("The address is: "+ obj.address);
-        console.log("The city is: "+ obj.city);
-        console.log("The email is: "+ obj.email);
-        console.log("The number is: "+ obj.number);
-        console.log("The store is: "+ obj.store);
+        // console.log("The name is: "+ obj.fullname);
+        // console.log("The address is: "+ obj.address);
+        // console.log("The city is: "+ obj.city);
+        // console.log("The email is: "+ obj.email);
+        // console.log("The number is: "+ obj.number);
+        // console.log("The store is: "+ obj.store);
 
         // INSERT TO MYSQL
         connection.query('INSERT INTO customer (fullname, address, city, email, number, store, date, time ) VALUES (?,?,?,?,?,?,?,?)',[obj.fullname, obj.address, obj.city, obj.email ,obj.number, obj.store, formattedDate, formattedTime], function(error, results, fields){
             if(error) throw error;
-            console.log("Success!");
+            console.log("Successfully Logged customer: "+ obj.fullname );
 
             // INSERT TO SHEETS
             insertToSheets( JSON.stringify({"data": [[ results.insertId, obj.fullname, obj.address, obj.city, obj.email ,obj.number, formattedDate, formattedTime, obj.store]]}));        
@@ -93,6 +94,20 @@ app.post('/insert', (req, res) => {
         })
     });
 });
+
+function GetAbsoluteHKTime()
+{
+    var now = new Date();
+    now.setUTCHours(now.getUTCHours() + 8);
+    return {
+        "year" : now.getUTCFullYear(),
+        "month" : now.getUTCMonth(),
+        "date" : now.getUTCDate(),
+        "hour" : now.getUTCHours(),
+        "minute" : now.getUTCMinutes(),
+        "second" : now.getUTCSeconds()
+    };
+}
 
 function insertToSheets (data) {
         var dataContent = '';
