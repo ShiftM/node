@@ -15,9 +15,9 @@ const RANGE = 'Sheet1';
 
 
 var connection = mysql.createConnection({
-    host:"testdatabase-1.c7rplytalvfe.us-east-2.rds.amazonaws.com",
+    host:"samsungexperiencestoredb.c7rplytalvfe.us-east-2.rds.amazonaws.com",
     user: "admin",
-    password: "12345678",
+    password: "ax6&+BHu6GbfsAG",
     database: "userdatabase",
 });
 
