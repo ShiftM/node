@@ -35,7 +35,7 @@ app.get('*', (req, res) => {
     // CHECK IF STORE IS VALID
     let valid = false;
     for (i = 0; i < stores.length; i++) {
-        if (str[1] === stores[i]) {
+        if (str[1] === stores[i].toLowerCase()) {
             valid = true;
         }
     }
@@ -72,6 +72,18 @@ app.post('/insert', (req, res) => {
 
         var obj = JSON.parse(content);
 
+        // Match store to JSON to get proper capitalition
+        let rawdata = fs.readFileSync('./assets/stores.json');
+        let stores = JSON.parse(rawdata);
+
+        let storeCorrectedCase;
+        // FIND THE STORE 
+        for (i = 0; i < stores.length; i++) {
+            if (obj.store === stores[i].toLowerCase()) {
+                storeCorrectedCase = stores[i];
+            }
+        }
+
         // console.log("The name is: "+ obj.fullname);
         // console.log("The address is: "+ obj.address);
         // console.log("The city is: "+ obj.city);
@@ -90,7 +102,8 @@ app.post('/insert', (req, res) => {
 
         res.json({ 
             date: formattedDate, 
-            time: formattedTime, 
+            time: formattedTime,
+            store: storeCorrectedCase
         })
     });
 });
