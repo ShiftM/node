@@ -76,7 +76,9 @@ app.post('/insert', (req, res) => {
         let rawdata = fs.readFileSync('./assets/stores.json');
         let stores = JSON.parse(rawdata);
 
+        // FOR WEBSITE
         let storeCorrectedCase;
+
         // FIND THE STORE 
         for (i = 0; i < stores.length; i++) {
             if (obj.store === stores[i].toLowerCase()) {
@@ -84,10 +86,11 @@ app.post('/insert', (req, res) => {
             }
         }
 
-
+        let samsungOmitted = obj.store;
         // SEE IF THERE IS 'SAMSUNG' IN FRONT OF THE STORE NAME
-        if ( storeCorrectedCase.replace(/-.*/,'') === 'Samsung') {
+        if ( obj.store.replace(/-.*/,'') === 'samsung') {
             // REMOVE SAMSUNG PART
+            samsungOmitted = obj.store.split('-').slice(1).join('-');
             storeCorrectedCase = storeCorrectedCase.split('-').slice(1).join('-');
         }
 
@@ -99,22 +102,23 @@ app.post('/insert', (req, res) => {
         // console.log("The email is: "+ obj.email);
         // console.log("The number is: "+ obj.number);
         // console.log("The store is: "+ storeCorrectedCase);
+        // console.log("The store is: "+ samsungOmitted);
 
 
-        // // // INSERT TO MYSQL
-        // connection.query('INSERT INTO customer (fullname, address, city, email, number, store, date, time ) VALUES (?,?,?,?,?,?,?,?)',[obj.fullname, obj.address, obj.city, obj.email ,obj.number, obj.store, formattedDate, formattedTime], function(error, results, fields){
-        //     if(error) throw error;
-        //     console.log("Successfully Logged customer: "+ obj.fullname );
+        // INSERT TO MYSQL
+        connection.query('INSERT INTO customer (fullname, address, city, email, number, store, date, time ) VALUES (?,?,?,?,?,?,?,?)',[obj.fullname, obj.address, obj.city, obj.email ,obj.number, samsungOmitted, formattedDate, formattedTime], function(error, results, fields){
+            if(error) throw error;
+            console.log("Successfully Logged customer: "+ obj.fullname );
 
-        //     // INSERT TO SHEETS
-        //     insertToSheets( JSON.stringify({"data": [[ results.insertId, obj.fullname, obj.address, obj.city, obj.email ,obj.number, formattedDate, formattedTime, obj.store]]}));        
-        // });
+            // INSERT TO SHEETS
+            insertToSheets( JSON.stringify({"data": [[ results.insertId, obj.fullname, obj.address, obj.city, obj.email ,obj.number, formattedDate, formattedTime, samsungOmitted]]}));        
+        });
 
-        // res.json({ 
-        //     date: formattedDate, 
-        //     time: formattedTime,
-        //     store: storeCorrectedCase
-        // })
+        res.json({ 
+            date: formattedDate, 
+            time: formattedTime,
+            store: storeCorrectedCase
+        })
     });
 });
 
