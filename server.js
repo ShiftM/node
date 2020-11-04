@@ -84,27 +84,37 @@ app.post('/insert', (req, res) => {
             }
         }
 
+
+        // SEE IF THERE IS 'SAMSUNG' IN FRONT OF THE STORE NAME
+        if ( storeCorrectedCase.replace(/-.*/,'') === 'Samsung') {
+            // REMOVE SAMSUNG PART
+            storeCorrectedCase = storeCorrectedCase.split('-').slice(1).join('-');
+        }
+
+
+
         // console.log("The name is: "+ obj.fullname);
         // console.log("The address is: "+ obj.address);
         // console.log("The city is: "+ obj.city);
         // console.log("The email is: "+ obj.email);
         // console.log("The number is: "+ obj.number);
-        // console.log("The store is: "+ obj.store);
+        // console.log("The store is: "+ storeCorrectedCase);
 
-        // // INSERT TO MYSQL
-        connection.query('INSERT INTO customer (fullname, address, city, email, number, store, date, time ) VALUES (?,?,?,?,?,?,?,?)',[obj.fullname, obj.address, obj.city, obj.email ,obj.number, obj.store, formattedDate, formattedTime], function(error, results, fields){
-            if(error) throw error;
-            console.log("Successfully Logged customer: "+ obj.fullname );
 
-            // INSERT TO SHEETS
-            insertToSheets( JSON.stringify({"data": [[ results.insertId, obj.fullname, obj.address, obj.city, obj.email ,obj.number, formattedDate, formattedTime, obj.store]]}));        
-        });
+        // // // INSERT TO MYSQL
+        // connection.query('INSERT INTO customer (fullname, address, city, email, number, store, date, time ) VALUES (?,?,?,?,?,?,?,?)',[obj.fullname, obj.address, obj.city, obj.email ,obj.number, obj.store, formattedDate, formattedTime], function(error, results, fields){
+        //     if(error) throw error;
+        //     console.log("Successfully Logged customer: "+ obj.fullname );
 
-        res.json({ 
-            date: formattedDate, 
-            time: formattedTime,
-            store: storeCorrectedCase
-        })
+        //     // INSERT TO SHEETS
+        //     insertToSheets( JSON.stringify({"data": [[ results.insertId, obj.fullname, obj.address, obj.city, obj.email ,obj.number, formattedDate, formattedTime, obj.store]]}));        
+        // });
+
+        // res.json({ 
+        //     date: formattedDate, 
+        //     time: formattedTime,
+        //     store: storeCorrectedCase
+        // })
     });
 });
 
