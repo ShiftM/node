@@ -37,7 +37,9 @@
 
                 // let str = urlstore[1].replace(/-/g, ' ');
                 let str = res.store.replace(/-/g, ' ');
-
+                if (str === "SESCO") {
+                  document.getElementById("SES").style.display = "none";
+                }
                 document.getElementById("info_store").innerHTML = str ;
                 document.getElementById("info_username").innerHTML = "Stay safe " + fullname;
 
@@ -283,7 +285,7 @@
           <br>
           <h6 class="info" id="info_date">date</h6>
           <h6 class="info" id="info_time">time</h6>
-          <h6 class="info">Samsung Experience Store</h6>
+          <h6 id="SES" class="info">Samsung Experience Store</h6>
           <h6 class="info" id="info_store">store</h6>
           <br>
         </div>
