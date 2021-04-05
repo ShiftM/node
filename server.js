@@ -105,14 +105,15 @@ app.post('/insert', (req, res) => {
         // console.log("The store is: "+ samsungOmitted);
 
 
-        // INSERT TO MYSQL
-        connection.query('INSERT INTO customer (fullname, address, city, email, number, store, date, time ) VALUES (?,?,?,?,?,?,?,?)',[obj.fullname, obj.address, obj.city, obj.email ,obj.number, samsungOmitted, formattedDate, formattedTime], function(error, results, fields){
-            if(error) throw error;
-            console.log("Successfully Logged customer: "+ obj.fullname );
+        // // INSERT TO MYSQL
+        // connection.query('INSERT INTO customer (fullname, address, city, email, number, store, date, time ) VALUES (?,?,?,?,?,?,?,?)',[obj.fullname, obj.address, obj.city, obj.email ,obj.number, samsungOmitted, formattedDate, formattedTime], function(error, results, fields){
+        //     if(error) throw error;
+        //     console.log("Successfully Logged customer: "+ obj.fullname );
 
-            // INSERT TO SHEETS
-            insertToSheets( JSON.stringify({"data": [[ results.insertId, obj.fullname, obj.address, obj.city, obj.email ,obj.number, formattedDate, formattedTime, samsungOmitted]]}));        
-        });
+                  
+        // });
+        // INSERT TO SHEETS
+        insertToSheets( JSON.stringify({"data": [[ ' ' , obj.fullname, obj.address, obj.city, obj.email ,obj.number, formattedDate, formattedTime, samsungOmitted]]})); 
 
         res.json({ 
             date: formattedDate, 
