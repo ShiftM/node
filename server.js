@@ -113,8 +113,7 @@ app.post('/insert', (req, res) => {
                   
         // });
         // INSERT TO SHEETS
-        insertToSheets( JSON.stringify({"data": [[ ' ' , obj.fullname, obj.address, obj.city, obj.email ,obj.number, formattedDate, formattedTime, samsungOmitted]]})); 
-
+        insertToSheets( JSON.stringify({"data": [[ year+month+date+hours+minutes+seconds , obj.fullname, obj.address, obj.city, obj.email ,obj.number, formattedDate, formattedTime, samsungOmitted]]})); 
         res.json({ 
             date: formattedDate, 
             time: formattedTime,
